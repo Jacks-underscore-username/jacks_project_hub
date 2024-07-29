@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<title>Jack's project hub</title>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./siteStyles.css">
+    <script src="./backgroundManager.js"></script>
+    <script src="./updateStats.js"></script>
+
+    <!-- Primary Meta Tags -->
+    <meta name="title" content="Jack's project hub" />
+    <meta name="description"
+        content="THE place to read about all of my projects, with exclusive content not seen elsewhere!" />
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://jacks-project-hub.vercel.app/" />
+    <meta property="og:title" content="Jack's project hub" />
+    <meta property="og:description"
+        content="THE place to read about all of my projects, with exclusive content not seen elsewhere!" />
+    <meta property="og:image" content="https://jacks-project-hub.vercel.app/preview.png" />
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image" />
+    <meta property="twitter:url" content="https://jacks-project-hub.vercel.app/" />
+    <meta property="twitter:title" content="Jack's project hub" />
+    <meta property="twitter:description"
+        content="THE place to read about all of my projects, with exclusive content not seen elsewhere!" />
+    <meta property="twitter:image" content="https://jacks-project-hub.vercel.app/preview.png" />
+</head>
+
+<body>
+    <canvas id="backgroundCanvas"></canvas>
+    <div id="overlay">
+        <div class="scrollOffset"></div>
+        <div id="content">
+            <div id="info">
+                <div id="titleText">
+                    Jack's project hub
+                </div>
+                <!-- will autofill on website load -->
+            </div>
+            <div id="posts">
+                <div class="post" onclick="window.location.href='./posts/Making a custom blog/'">
+    <div class="title">
+        
+        <div class="markup" style="color:#fff; font-style:normal; font-weight:normal; font-size:calc(xx-large * 0.25); text-decoration: none;margin:0; padding:0; word-wrap:break-word; width:100%; height:100%;">
+            <div style="text-align:center;">Making a <span style="color:#0f0; font-weight:bold;"><code>|[custom]</code></span> blog</div>
+        </div>
+        
+    </div>
+    
+        <div class="markup preview" style="color:#0f0; font-style:normal; font-weight:normal; font-size:small; text-decoration: none;margin:0; padding:0; word-wrap:break-word; width:100%; height:100%;">
+            <div style="text-align:center;">I like to create posts, but have never found a good platform to do so.<br>Follow along as I create my own blog site, complete with custom markup, live backgrounds, and more!</div>
+        </div>
+        </div>
+                <script> //Controls the grid for the posts
+                    {
+                        Array.from(document.getElementsByClassName('post')).forEach(post => post.style.width = Math.random() * 250 + 250 + 'px')
+                        Array.from(document.getElementsByClassName('post')).forEach(post => post.style.height = Math.random() * 250 + 250 + 'px')
+
+                        const wrapper = document.getElementById('posts')
+                        const postPadding = 10
+                        const borderSize = 25
+                        const updateGrid = () => {
+                            const posts = Array.from(document.getElementsByClassName('post'))
+                            const maxWidth = wrapper.getBoundingClientRect().width - borderSize * 2
+                            Array.from(document.getElementsByClassName('post_row')).forEach(row => row.classList.add('post_row_old'))
+                            let lastRowElement = document.createElement('div')
+                            lastRowElement.classList.add('post_row')
+                            let lastRowWidth = 0
+                            for (const post of posts) {
+                                const width = post.getBoundingClientRect().width + postPadding * 2
+                                if (lastRowWidth === 0 || lastRowWidth + width < maxWidth) {
+                                    lastRowElement.appendChild(post)
+                                    lastRowWidth += width
+                                }
+                                else {
+                                    wrapper.appendChild(lastRowElement)
+                                    lastRowElement = document.createElement('div')
+                                    lastRowElement.classList.add('post_row')
+                                    lastRowElement.appendChild(post)
+                                    lastRowWidth = width
+                                }
+                            }
+                            wrapper.appendChild(lastRowElement)
+                            Array.from(document.getElementsByClassName('post_row_old')).forEach(row => row.remove())
+                        }
+                        document.addEventListener('DOMContentLoaded', updateGrid)
+                        window.addEventListener('resize', updateGrid)
+                    }
+                </script>
+            </div>
+            <div id="returnToTopButton">
+                <span onclick="window.scroll({top:0,left:0,behavior:'smooth'})">Return to top</span>
+            </div>
+        </div>
+        <div class="scrollOffset"></div>
+    </div>
+</body>
+
+</html>

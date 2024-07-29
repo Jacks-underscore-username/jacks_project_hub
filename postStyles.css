@@ -1,0 +1,158 @@
+:root {
+    --transparentOpacity: 50%;
+    --black-solid: rgb(from #000 r g b / var(--transparentOpacity));
+    --black: rgb(from #0006 r g b / var(--transparentOpacity));
+    --white: rgb(from #fff r g b / var(--transparentOpacity));
+    --border: rgb(from #9996 r g b / var(--transparentOpacity));
+    --highlight: #0f0f;
+    --highlight-dark: #0f06;
+    --background: rgb(from #45454582 r g b / var(--transparentOpacity));
+    --background-dark: rgb(from #3336 r g b / var(--transparentOpacity));
+}
+
+@font-face {
+    font-family: 'Fira Code';
+    src: url('../../firaCode.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+html,
+body {
+    margin: 0;
+    padding: 0;
+    overflow: hidden auto;
+    background-color: var(--black-solid);
+    font-family: 'Fira Code';
+}
+
+#overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: calc(100vh - 5px);
+    z-index: 1;
+    padding: 1px;
+    display: grid;
+    justify-content: center;
+    align-items: center;
+    justify-items: center;
+}
+
+#content {
+    width: 80vw;
+    background-color: var(--background-dark);
+    border: 5px solid var(--highlight-dark);
+    border-radius: 15px;
+    padding: 10px;
+    margin: 25px;
+}
+
+.scrollOffset {
+    height: 25px;
+    width: 1px;
+}
+
+@media (max-aspect-ratio: 1/1) {
+    #content {
+        width: 100vw;
+        margin: 0;
+        border-radius: 0;
+    }
+
+    .scrollOffset {
+        height: 0;
+    }
+}
+
+code {
+    font-family: 'Fira Code', monospace;
+    border: 2px solid var(--background-dark);
+}
+
+#info {
+    background-color: var(--background-dark);
+    border: 5px solid var(--background-dark);
+    border-radius: 15px 15px 0 0;
+    padding: 5px;
+    margin-bottom: 15px;
+    text-align: center;
+    color: var(--highlight);
+}
+
+#info div {
+    margin: 2.5px;
+}
+
+
+#info #return_link a {
+    color: var(--highlight)
+}
+
+#post_background {
+    background-color: var(--background);
+}
+
+#post {
+    padding: 25px;
+    border: 5px solid var(--background-dark);
+    border-bottom: none;
+    background-color: var(--black);
+}
+
+#backgroundCanvas {
+    position: fixed;
+    display: block;
+}
+
+img,
+video {
+    width: 100%;
+    object-fit: fill;
+    border: 5px solid var(--background-dark);
+}
+
+.video_wrapper {
+    filter: blur(5px) saturate(.5);
+    color: transparent;
+    transition: all .25s ease-in-out
+}
+
+.video_wrapper:hover {
+    filter: blur(0) saturate(1);
+    color: var(--white);
+}
+
+.video_wrapper span {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 2em;
+    text-align: center;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#returnToTopButton {
+    background-color: var(--background);
+    border: 5px solid var(--background-dark);
+    border-top: none;
+    padding: 5px;
+    text-align: center;
+    color: var(--highlight);
+    text-decoration: underline;
+    border-radius: 0 0 15px 15px;
+}
+
+#returnToTopButton span {
+    cursor: pointer;
+}
