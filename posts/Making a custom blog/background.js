@@ -25,9 +25,11 @@ function wrapInComment(fileName) {
         js: ['/**', '*/'],
         css: ['/*', '*/'],
         html: ['<!--', '-->'],
-        txt: ['---', '---']
+        txt: ['---', '---'],
+        md: ['<!--', '-->']
     }
-    return `${map[fileName.split('.')[1]][0]} ${fileName} ${map[fileName.split('.')[1]][1]}`
+    if (map[fileName.split('.')[1]] === undefined) return fileName
+    else return `${map[fileName.split('.')[1]][0]} ${fileName} ${map[fileName.split('.')[1]][1]}`
 }
 
 fetch('../../mem.json')
@@ -113,8 +115,12 @@ export function update(canvas, ctx) {
         ctx.font = `${fontSize}px 'Fira Code'`
         ctx.textBaseline = 'top'
 
-        if (lastTypeTime === 0)
-            for (let i = 0; i < 1500; i++) typeChar(ctx, canvas)
+        if (lastTypeTime === 0) {
+            ctx.fillStyle = '#000'
+            ctx.fillRect(0, 0, canvas.width, canvas.height)
+            // typeChar(ctx, canvas)    
+        }
+        //     for (let i = 0; i < 1500; i++) typeChar(ctx, canvas)
 
         if (Date.now() - lastTypeTime >= 1000 / currentSpeed) {
             lastTypeTime = Date.now()
@@ -138,13 +144,13 @@ export function start(canvas, ctx) {
     ctx.fillStyle = '#000'
     ctx.fillRect(0, 0, canvas.width, canvas.height)
 
-    if (orderedLines != undefined) {
-        lineNumber = 0
-        hasWrittenFileName = false
-        lineToWrite = wrapInComment(currentFile)
-        currentLine = ''
-        writtenLines = []
-    }
+    // if (orderedLines != undefined) {
+    //     lineNumber = 0
+    //     hasWrittenFileName = false
+    //     lineToWrite = wrapInComment(currentFile)
+    //     currentLine = ''
+    //     writtenLines = []
+    // }
 }
 
 //includeInHomeBackgrounds
