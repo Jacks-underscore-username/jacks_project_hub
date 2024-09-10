@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+<title>ITW_The wheel factory</title>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../../postStyles.css">
+    <script src="./backgroundManager.js"></script>
+
+    <!-- Primary Meta Tags -->
+    <meta name="title" content="ITW_The wheel factory - Jack's project hub" />
+    <meta name="description" content="(Inventing The Wheel (ITF) is a semi-series where I create already existing things from scratch.)..." />
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://jacks-project-hub.vercel.app/posts/ITW_The wheel factory/" />
+    <meta property="og:title" content="ITW_The wheel factory - Jack's project hub" />
+    <meta property="og:description" content="(Inventing The Wheel (ITF) is a semi-series where I create already existing things from scratch.)..." />
+    <meta property="og:image" content="https://jacks-project-hub.vercel.app/posts/ITW_The wheel factory/preview.png" />
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image" />
+    <meta property="twitter:url" content="https://jacks-project-hub.vercel.app/posts/ITW_The wheel factory/" />
+    <meta property="twitter:title" content="ITW_The wheel factory - Jack's project hub" />
+    <meta property="twitter:description" content="(Inventing The Wheel (ITF) is a semi-series where I create already existing things from scratch.)..." />
+    <meta property="twitter:image" content="https://jacks-project-hub.vercel.app/posts/ITW_The wheel factory/preview.png" />
+</head>
+
+<body>
+    <canvas id="backgroundCanvas"></canvas>
+    <div id="overlay">
+        <div class="scrollOffset"></div>
+        <div id="content">
+            <div id="info">
+                
+        <div class="markup" style="color:#0f0; font-style:normal; font-weight:normal; font-size:medium; text-decoration: none; text-decoration: none;margin:0; padding:0; word-wrap:break-word; width:100%; height:100%;">
+            <div style="text-align:center;"><span style="font-style:italic; font-weight:bold; font-size:xx-large;">ITW</span><span style="font-size:xx-large;">: (</span><span style="color:#fff; font-size:xx-large;">The Wheel Factory </span><span style="font-size:xx-large;">||</span><span style="color:#fff; font-weight:bold; font-size:xx-large;"> Snips</span><span style="font-size:xx-large;">)</span></div>
+        </div>
+        
+                <!-- will autofill on website load -->
+                <script>
+                    const postName = 'ITW_The wheel factory'
+                    const script = document.currentScript
+                    const addStat = text => {
+                        const div = document.createElement('div')
+                        div.innerHTML = text
+                        script.insertAdjacentElement('afterend', div)
+                    }
+                    document.addEventListener('DOMContentLoaded', () => {
+                        fetch('../../mem.json')
+                            .then(response => response.json())
+                            .then(mem => {
+                                addStat(`First published: <code>${Math.floor((Date.now() - mem.postsCreated[postName]) / 86400000)}</code> days ago`)
+                                addStat(`Last updated: <code>${Math.floor((Date.now() - mem.postsUpdated[postName]) / 86400000)}</code> days ago`)
+                                addStat(`Current hash: <code>${mem.postHashes[postName]}</code>`)
+                            })
+                            .catch(error => {
+                                console.error('Error fetching mem for stats:', error)
+                            })
+                    })
+                </script>
+                <!-- </div> -->
+                <div id="return_link">
+                    <a href="../../">Home</a>
+                </div>
+            </div>
+            <div id="post_background">
+                <div id="post">
+                    
+        <div class="markup" style="color:#fff; font-style:normal; font-weight:normal; font-size:large; text-decoration: none; text-decoration: none;margin:0; padding:0; word-wrap:break-word; width:100%; height:100%;">
+<script>; 
+ (() => {
+ const wrapper = document.currentScript.parentNode;
+ function setValue(key, value) {
+ let saveData = sessionStorage.getItem("markup") != null ? JSON.parse(sessionStorage.getItem("markup")) : {};
+ saveData[key] = value;
+ sessionStorage.setItem("markup", JSON.stringify(saveData));
+ }
+ function getValue(key) {
+ return (sessionStorage.getItem("markup") != null ? JSON.parse(sessionStorage.getItem("markup")) : {})[key];
+ }
+ function removeKey(key) {
+ let saveData = sessionStorage.getItem("markup") != null ? JSON.parse(sessionStorage.getItem("markup")) : {};
+ delete saveData[key];
+ sessionStorage.setItem("markup", JSON.stringify(saveData));
+ }
+ document.addEventListener("DOMContentLoaded", () => {
+ [...wrapper.getElementsByClassName("folder")].forEach((folder) => {
+ if (getValue(`id_${folder.dataset.id}`) != null) {
+ const children = folder.children, open = getValue(`id_${folder.dataset.id}`);
+ children[0].innerHTML = children[0].innerHTML.replace(open ? "open" : "close", open ? "close" : "open");
+ children[1].style.display = open ? "" : "none";
+ }
+ });
+ });
+ if (window.markup == null)
+ window.markup = {
+ folder(event) {
+ event.stopPropagation();
+ const folder = event.target.closest(".folder"), children = folder.children, open = children[1].style.display == "none";
+ children[0].innerHTML = children[0].innerHTML.replace(open ? "open" : "close", open ? "close" : "open");
+ children[1].style.display = open ? "" : "none";
+ setValue(`id_${folder.dataset.id}`, open);
+ }
+ };
+ })();
+; </script>
+            <div style="text-align:center;"><span style="color:#0f0; font-size:xx-large;">I'm tired of rewriting my code every project because I have no good way of saving, searching, and reusing it.</span><span style="font-size:x-large;"><br>So what </span><span style="font-style:italic; font-size:x-large;">do</span><span style="font-size:x-large;"> I want? I want some way of "easily" reusing (saving / loading) code, and I want it to work for small pieces of code and large ones.</span></div><div style="text-align:left;"><br>As for any project, I should first define what I want more specifically:<span style="color:#0f0;"><br>&nbsp;*</span> A command line interface so I can use it anywhere.<span style="color:#0f0;"><br>&nbsp;*</span> Semi-interactive commands so I don't have to remember all of the command tree.<span style="color:#0f0;"><br>&nbsp;*</span> Local saving.<span style="color:#0f0;"><br>&nbsp;*</span> Tags to search saved pieces of code.<span style="color:#0f0;"><br>&nbsp;*</span> A way to import a saved piece of code.<span style="color:#0f0;"><br>&nbsp;*</span> A way to update a saved piece of code.<span style="color:#0f0;"><br>&nbsp;*</span> Version control.<span style="color:#0f0;"><br>&nbsp;*</span> Different categories for different sized code pieces.<span style="color:#0f0;"><br>&nbsp;*</span> A unique namespace for each category / language.<span style="color:#0f0;"><br>&nbsp;*</span> A dependency system.<span style="color:#0f0;"><br>&nbsp;*</span> Descriptions for each saved piece of code.<br><br>But before I work on all that I need a name for this: <span style="font-style:italic; font-weight:bold;">snips</span>, since this system is designed to work with small snippets of code, and each saved piece of code is a <span style="font-weight:bold;">snip</span>.<br><br>Now that I have a general idea of what I want, I need to design the data structure for it, designing the data structure for a large project like this can be immensely helpful later once I've forgot my original plans, since I know where all the data is and what it is.<br>I will need a folder structure to store the actual snips, but I'll also want an index object to represent what i have saved, since reading an object is going to be much faster then reading a folder for everything.<br><br>This is enough planning to design the structure:<span style="font-size:small;"><br>Index:</span></div>
+                            <div class="folder" data-id=0>
+                                <div style="cursor: pointer; text-align:left;" onclick="window.markup.folder(event)">
+                                    <span style="font-size:small;">|[click to open]</span>
+                                </div>
+                                <div style="display:none;">
+                                    <div style="text-align:left;"><br> <code>{</code><br> <code>&nbsp;&nbsp;folder: {</code><br> <code>&nbsp;&nbsp;&nbsp;&nbsp;[language]: {</code><br> <code>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[id]: {</code><br> <code>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;versions: {</code><br> <code>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[version]: {</code><br> <code>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;? dependencies: {</code><br> <code>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;? node: [</code><br> <code>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[id],</code><br> <code>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;...</code><br> <code>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;],</code><br> <code>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;? npm: {</code><br> <code>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[id]: [version],</code><br> <code>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;...</code><br> <code>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;},</code><br> <code>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;? snips: {</code><br> <code>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[id]: {</code><br> <code>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;version: [version],</code><br> <code>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;language: [language]</code><br> <code>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}</code><br> <code>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}</code><br> <code>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;},</code><br> <code>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;date: [date],</code><br> <code>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;changelog: [message]</code><br> <code>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;},</code><br> <code>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;...</code><br> <code>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;},</code><br> <code>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;name: [name],</code><br> <code>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;description: [message],</code><br> <code>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;? tags: [tags]</code><br> <code>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;},</code><br> <code>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;...</code><br> <code>&nbsp;&nbsp;&nbsp;&nbsp;},</code><br> <code>&nbsp;&nbsp;&nbsp;&nbsp;...</code><br> <code>&nbsp;&nbsp;},</code><br> <code>&nbsp;&nbsp;module: {</code><br> <code>&nbsp;&nbsp;&nbsp;&nbsp;...</code><br> <code>&nbsp;&nbsp;},</code><br> <code>&nbsp;&nbsp;class: {</code><br> <code>&nbsp;&nbsp;&nbsp;&nbsp;...</code><br> <code>&nbsp;&nbsp;},</code><br> <code>&nbsp;&nbsp;function: {</code><br> <code>&nbsp;&nbsp;&nbsp;&nbsp;...</code><br> <code>&nbsp;&nbsp;},</code><br> <code>&nbsp;&nbsp;snip: {</code><br> <code>&nbsp;&nbsp;&nbsp;&nbsp;...</code><br> <code>&nbsp;&nbsp;}</code><br> <code>}</code></div>
+                                </div>
+                            </div>
+                            <div style="text-align:left;"><span style="font-size:small;"><br>Folder:</span></div>
+                            <div class="folder" data-id=1>
+                                <div style="cursor: pointer; text-align:left;" onclick="window.markup.folder(event)">
+                                    <span style="font-size:small;">|[click to open]</span>
+                                </div>
+                                <div style="display:none;">
+                                    <div style="text-align:left;"><br> <code>data -></code><br> <code>&nbsp;&nbsp;folder -></code><br> <code>&nbsp;&nbsp;&nbsp;&nbsp;[language] -></code><br> <code>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[id] -></code><br> <code>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;versions -></code><br> <code>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[version] -></code><br> <code>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;content</code><br> <code>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;dependencies.json</code><br> <code>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;date.txt</code><br> <code>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;changelog.md</code><br> <code>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;...</code><br> <code>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;name.txt</code><br> <code>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;description.md</code><br> <code>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;? tags.json</code><br> <code>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;...</code><br> <code>&nbsp;&nbsp;&nbsp;&nbsp;...</code><br> <code>&nbsp;&nbsp;module -></code><br> <code>&nbsp;&nbsp;&nbsp;&nbsp;...</code><br> <code>&nbsp;&nbsp;class -></code><br> <code>&nbsp;&nbsp;&nbsp;&nbsp;...</code><br> <code>&nbsp;&nbsp;function -></code><br> <code>&nbsp;&nbsp;&nbsp;&nbsp;...</code><br> <code>&nbsp;&nbsp;snip -></code><br> <code>&nbsp;&nbsp;&nbsp;&nbsp;...</code></div>
+                                </div>
+                            </div>
+                            <div style="text-align:left;"><br><br>Now for snip sizes, since I obviously can't store a folder snip in the same way as a single line snip, and I want a wat to filter a search based snip type, so what types do I want?:<span style="color:#0f0;"><br>&nbsp;*</span> Folder (for large project templates etc).<span style="color:#0f0;"><br>&nbsp;*</span> Module (a self contained file that exports the useful stuff).<span style="color:#0f0;"><br>&nbsp;*</span> Class (classes tend to end up pretty large, but it wouldn't make sense to put them as a module most of the time).<span style="color:#0f0;"><br>&nbsp;*</span> Function (self explanatory).<span style="color:#0f0;"><br>&nbsp;*</span> Snip (the smallest category, for stuff like one-liners).<br><br>That's all of the shared stuff, now for each action:</div><div style="text-align:center;"><span style="color:#0f0; font-size:x-large;"><br><br>Create</span></div>
+                            <div class="folder" data-id=2>
+                                <div style="cursor: pointer; text-align:center;" onclick="window.markup.folder(event)">
+                                    <span style="color:#0f0; font-size:small;">|[click to close]</span>
+                                </div>
+                                <div >
+                                    <div style="text-align:center;"></div><div style="text-align:left;"><span style="color:#0f0;"><br>&nbsp;1:</span> Categorizing the snip (eg setting the snip type / name / id / etc).<span style="color:#0f0;"><br>&nbsp;2:</span> Imputing the snip:<span style="color:#0f0;"><br>&nbsp;2.2:</span> For a snip / function / class this means creating a temp file for the snip to be pasted into, then reading and removing the file once it's saved.<span style="color:#0f0;"><br>&nbsp;2.3</span> For a module this means inputting the path for the file.<span style="color:#0f0;"><br>&nbsp;2.4</span> For a folder this means inputting the path for the folder.<span style="color:#0f0;"><br>&nbsp;3:</span> Saving the snip to the index / data folder.</div>
+                                </div>
+                            </div>
+                            <div style="text-align:center;"><span style="color:#0f0; font-size:x-large;"><br><br>Delete</span></div>
+                            <div class="folder" data-id=3>
+                                <div style="cursor: pointer; text-align:center;" onclick="window.markup.folder(event)">
+                                    <span style="color:#0f0; font-size:small;">|[click to close]</span>
+                                </div>
+                                <div >
+                                    <div style="text-align:center;"></div><div style="text-align:left;"><span style="color:#0f0;"><br>&nbsp;1:</span> Selecting the snip.<span style="color:#0f0;"><br>&nbsp;2:</span> Confirming.<span style="color:#0f0;"><br>&nbsp;3:</span> Deleting the snip from the index / data folder.   </div>
+                                </div>
+                            </div>
+                            <div style="text-align:center;"><span style="color:#0f0; font-size:x-large;"><br><br>Update</span></div>
+                            <div class="folder" data-id=4>
+                                <div style="cursor: pointer; text-align:center;" onclick="window.markup.folder(event)">
+                                    <span style="color:#0f0; font-size:small;">|[click to close]</span>
+                                </div>
+                                <div >
+                                    <div style="text-align:center;"></div><div style="text-align:left;"><span style="color:#0f0;"><br>&nbsp;1:</span> Selecting the snip.<span style="color:#0f0;"><br>&nbsp;2:</span> Updating the dependencies if needed.<span style="color:#0f0;"><br>&nbsp;3:</span> Selecting update type (major / minor / bugfix).<span style="color:#0f0;"><br>&nbsp;4:</span> Entering the changelog.<span style="color:#0f0;"><br>&nbsp;5:</span> Inputting the snip (same as in creating a snip).<span style="color:#0f0;"><br>&nbsp;6:</span> Saving the snip in the index / data folder.</div>
+                                </div>
+                            </div>
+                            <div style="text-align:center;"><span style="color:#0f0; font-size:x-large;"><br><br>Info</span></div>
+                            <div class="folder" data-id=5>
+                                <div style="cursor: pointer; text-align:center;" onclick="window.markup.folder(event)">
+                                    <span style="color:#0f0; font-size:small;">|[click to close]</span>
+                                </div>
+                                <div >
+                                    <div style="text-align:center;"></div><div style="text-align:left;"><span style="color:#0f0;"><br>&nbsp;1:</span> Select a snip.<span style="color:#0f0;"><br>&nbsp;1:</span> Display it's description / changelogs.</div>
+                                </div>
+                            </div>
+                            <div style="text-align:center;"><span style="color:#0f0; font-size:x-large;"><br><br>Tags</span></div>
+                            <div class="folder" data-id=6>
+                                <div style="cursor: pointer; text-align:center;" onclick="window.markup.folder(event)">
+                                    <span style="color:#0f0; font-size:small;">|[click to close]</span>
+                                </div>
+                                <div >
+                                    <div style="text-align:center;"></div><div style="text-align:left;"><span style="color:#0f0;"><br>&nbsp;*</span> Get:<span style="color:#0f0;"><br>&nbsp;1:</span> Select a snip.<span style="color:#0f0;"><br>&nbsp;2:</span> Display the snips tags.<span style="color:#0f0;"><br>&nbsp;*</span> Set:<span style="color:#0f0;"><br>&nbsp;1:</span> Select a snip.<span style="color:#0f0;"><br>&nbsp;2:</span> Input it's tags.<span style="color:#0f0;"><br>&nbsp;3:</span> Save the snip to the index / data folder.<span style="color:#0f0;"><br>&nbsp;*</span> Add:<span style="color:#0f0;"><br>&nbsp;1:</span> Select a snip.<span style="color:#0f0;"><br>&nbsp;2:</span> Input it's new tags.<span style="color:#0f0;"><br>&nbsp;3:</span> Save the snip to the index / data folder.<span style="color:#0f0;"><br>&nbsp;*</span> Remove:<span style="color:#0f0;"><br>&nbsp;1:</span> Select a snip.<span style="color:#0f0;"><br>&nbsp;2:</span> Enter tags to remove.<span style="color:#0f0;"><br>&nbsp;3:</span> Save the snip to the index / data folder.<span style="color:#0f0;"><br>&nbsp;*</span> List:<span style="color:#0f0;"><br>&nbsp;1:</span> Display all of the tags for all snips.</div>
+                                </div>
+                            </div>
+                            <div style="text-align:center;"><span style="color:#0f0; font-size:x-large;"><br><br>Install</span></div>
+                            <div class="folder" data-id=7>
+                                <div style="cursor: pointer; text-align:center;" onclick="window.markup.folder(event)">
+                                    <span style="color:#0f0; font-size:small;">|[click to close]</span>
+                                </div>
+                                <div >
+                                    <div style="text-align:center;"></div><div style="text-align:left;"><span style="color:#0f0;"><br>&nbsp;1.</span> Select a snip.<span style="color:#0f0;"><br>&nbsp;2:</span> Copy the snip to:<span style="color:#0f0;"><br>&nbsp;2.2:</span> If the snip is a folder, enter the folder path.<span style="color:#0f0;"><br>&nbsp;2.3:</span> If the snip is a module, create a local folder for snip modules and copy to there.<span style="color:#0f0;"><br>&nbsp;2.4:</span> If the snip is a class / function / snip create a temporary file and copy there, then delete the file once the snip is grabbed.<span style="color:#0f0;"><br>&nbsp;3:</span> Install any npm dependencies.<span style="color:#0f0;"><br>&nbsp;4:</span> Install any snip dependencies (so rerun this thing).</div>
+                                </div>
+                            </div>
+                            <div style="text-align:center;"><span style="color:#0f0; font-size:x-large;"><br><br>Search</span></div>
+                            <div class="folder" data-id=8>
+                                <div style="cursor: pointer; text-align:center;" onclick="window.markup.folder(event)">
+                                    <span style="color:#0f0; font-size:small;">|[click to close]</span>
+                                </div>
+                                <div >
+                                    <div style="text-align:center;"></div><div style="text-align:left;"><span style="color:#0f0;"><br>&nbsp;1:</span> Display how many results the are with current filters,<span style="color:#0f0;"><br>&nbsp;2:</span> Input the next action ([A]dd filter, [R]emove filter, or [S]how results, [C]urrent filters, []exit).<span style="color:#0f0;"><br>&nbsp;3A:</span> Select filter type (snip version, type, tag, name, id, etc) (note: only allows adding filters that will change the results, eg no adding a type filter when all snips are the same type).<span style="color:#0f0;"><br>&nbsp;3A.2:</span> Select inversion state (reverses the filter).<span style="color:#0f0;"><br>&nbsp;3R:</span> Select filter to remove.<span style="color:#0f0;"><br>&nbsp;3R.2:</span> Remove the filter.<span style="color:#0f0;"><br>&nbsp;3S:</span> Show all the filtered snips.<span style="color:#0f0;"><br>&nbsp;3C:</span> Show the current filters.<span style="color:#0f0;"><br>&nbsp;3:</span> Exit.<span style="color:#0f0;"><br>&nbsp;4:</span> Jump to step 1.</div>
+                                </div>
+                            </div>
+                            <div style="text-align:left;"><br><br>All in all this was a surprisingly quick and easy project, the majority of the code only took one day! And while it probably didn't make for the most interesting post, it's one of my most useful projects and I expect to use it extensively in the future.<span style="color:#0f0;"><br><br>If you want to try it out yourself, you can find the code and setup instructions </span><span style="color:#060; text-decoration: underline;"><a href="https://github.com/Jacks-underscore-username/snips" style="all:unset; cursor:pointer;">on my github</span></a><span style="color:#0f0;">.</span><br><br>That's all for today, thanks for reading!</div>
+        </div>
+        
+                </div>
+            </div>
+            <div id="returnToTopButton">
+                <span onclick="window.scroll({top:0,left:0,behavior:'smooth'})">Return to top</span>
+            </div>
+        </div>
+        <div class="scrollOffset"></div>
+    </div>
+</body>
+
+</html>
