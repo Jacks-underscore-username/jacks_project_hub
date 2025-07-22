@@ -6,6 +6,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="../../postStyles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@300..700&display=swap" rel="stylesheet">
     <script src="./backgroundManager.js"></script>
 
     <!-- Primary Meta Tags -->
@@ -107,7 +110,7 @@
  })();
 ; </script>
             <div style="text-align:center;"><span style="color:#0f0; font-size:xx-large;">I'm tired of rewriting my code every project because I have no good way of saving, searching, and reusing it.</span><span style="font-size:x-large;"><br>So what </span><span style="font-style:italic; font-size:x-large;">do</span><span style="font-size:x-large;"> I want? I want some way of "easily" reusing (saving / loading) code, and I want it to work for small pieces of code and large ones.</span></div><div style="text-align:left;"><br>As for any project, I should first define what I want more specifically:<span style="color:#0f0;"><br>&nbsp;*</span> A command line interface so I can use it anywhere.<span style="color:#0f0;"><br>&nbsp;*</span> Semi-interactive commands so I don't have to remember all of the command tree.<span style="color:#0f0;"><br>&nbsp;*</span> Local saving.<span style="color:#0f0;"><br>&nbsp;*</span> Tags to search saved pieces of code.<span style="color:#0f0;"><br>&nbsp;*</span> A way to import a saved piece of code.<span style="color:#0f0;"><br>&nbsp;*</span> A way to update a saved piece of code.<span style="color:#0f0;"><br>&nbsp;*</span> Version control.<span style="color:#0f0;"><br>&nbsp;*</span> Different categories for different sized code pieces.<span style="color:#0f0;"><br>&nbsp;*</span> A unique namespace for each category / language.<span style="color:#0f0;"><br>&nbsp;*</span> A dependency system.<span style="color:#0f0;"><br>&nbsp;*</span> Descriptions for each saved piece of code.<br><br>But before I work on all that I need a name for this: <span style="font-style:italic; font-weight:bold;">snips</span>, since this system is designed to work with small snippets of code, and each saved piece of code is a <span style="font-weight:bold;">snip</span>.<br><br>Now that I have a general idea of what I want, I need to design the data structure for it, designing the data structure for a large project like this can be immensely helpful later once I've forgot my original plans, since I know where all the data is and what it is.<br>I will need a folder structure to store the actual snips, but I'll also want an index object to represent what i have saved, since reading an object is going to be much faster then reading a folder for everything.<br><br>This is enough planning to design the structure:<span style="font-size:small;"><br>Index:</span></div>
-                            <div class="folder" data-id=0>
+                            <div class="folder" data-id=6>
                                 <div style="cursor: pointer; text-align:left;" onclick="window.markup.folder(event)">
                                     <span style="font-size:small;">|[click to open]</span>
                                 </div>
@@ -116,7 +119,7 @@
                                 </div>
                             </div>
                             <div style="text-align:left;"><span style="font-size:small;"><br>Folder:</span></div>
-                            <div class="folder" data-id=1>
+                            <div class="folder" data-id=7>
                                 <div style="cursor: pointer; text-align:left;" onclick="window.markup.folder(event)">
                                     <span style="font-size:small;">|[click to open]</span>
                                 </div>
@@ -125,7 +128,7 @@
                                 </div>
                             </div>
                             <div style="text-align:left;"><br><br>Now for snip sizes, since I obviously can't store a folder snip in the same way as a single line snip, and I want a wat to filter a search based snip type, so what types do I want?:<span style="color:#0f0;"><br>&nbsp;*</span> Folder (for large project templates etc).<span style="color:#0f0;"><br>&nbsp;*</span> Module (a self contained file that exports the useful stuff).<span style="color:#0f0;"><br>&nbsp;*</span> Class (classes tend to end up pretty large, but it wouldn't make sense to put them as a module most of the time).<span style="color:#0f0;"><br>&nbsp;*</span> Function (self explanatory).<span style="color:#0f0;"><br>&nbsp;*</span> Snip (the smallest category, for stuff like one-liners).<br><br>That's all of the shared stuff, now for each action:</div><div style="text-align:center;"><span style="color:#0f0; font-size:x-large;"><br><br>Create</span></div>
-                            <div class="folder" data-id=2>
+                            <div class="folder" data-id=8>
                                 <div style="cursor: pointer; text-align:center;" onclick="window.markup.folder(event)">
                                     <span style="color:#0f0; font-size:small;">|[click to close]</span>
                                 </div>
@@ -134,7 +137,7 @@
                                 </div>
                             </div>
                             <div style="text-align:center;"><span style="color:#0f0; font-size:x-large;"><br><br>Delete</span></div>
-                            <div class="folder" data-id=3>
+                            <div class="folder" data-id=9>
                                 <div style="cursor: pointer; text-align:center;" onclick="window.markup.folder(event)">
                                     <span style="color:#0f0; font-size:small;">|[click to close]</span>
                                 </div>
@@ -143,7 +146,7 @@
                                 </div>
                             </div>
                             <div style="text-align:center;"><span style="color:#0f0; font-size:x-large;"><br><br>Update</span></div>
-                            <div class="folder" data-id=4>
+                            <div class="folder" data-id=10>
                                 <div style="cursor: pointer; text-align:center;" onclick="window.markup.folder(event)">
                                     <span style="color:#0f0; font-size:small;">|[click to close]</span>
                                 </div>
@@ -152,7 +155,7 @@
                                 </div>
                             </div>
                             <div style="text-align:center;"><span style="color:#0f0; font-size:x-large;"><br><br>Info</span></div>
-                            <div class="folder" data-id=5>
+                            <div class="folder" data-id=11>
                                 <div style="cursor: pointer; text-align:center;" onclick="window.markup.folder(event)">
                                     <span style="color:#0f0; font-size:small;">|[click to close]</span>
                                 </div>
@@ -161,7 +164,7 @@
                                 </div>
                             </div>
                             <div style="text-align:center;"><span style="color:#0f0; font-size:x-large;"><br><br>Tags</span></div>
-                            <div class="folder" data-id=6>
+                            <div class="folder" data-id=12>
                                 <div style="cursor: pointer; text-align:center;" onclick="window.markup.folder(event)">
                                     <span style="color:#0f0; font-size:small;">|[click to close]</span>
                                 </div>
@@ -170,7 +173,7 @@
                                 </div>
                             </div>
                             <div style="text-align:center;"><span style="color:#0f0; font-size:x-large;"><br><br>Install</span></div>
-                            <div class="folder" data-id=7>
+                            <div class="folder" data-id=13>
                                 <div style="cursor: pointer; text-align:center;" onclick="window.markup.folder(event)">
                                     <span style="color:#0f0; font-size:small;">|[click to close]</span>
                                 </div>
@@ -179,7 +182,7 @@
                                 </div>
                             </div>
                             <div style="text-align:center;"><span style="color:#0f0; font-size:x-large;"><br><br>Search</span></div>
-                            <div class="folder" data-id=8>
+                            <div class="folder" data-id=14>
                                 <div style="cursor: pointer; text-align:center;" onclick="window.markup.folder(event)">
                                     <span style="color:#0f0; font-size:small;">|[click to close]</span>
                                 </div>

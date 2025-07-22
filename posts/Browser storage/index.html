@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+<title>Browser storage</title>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../../postStyles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@300..700&display=swap" rel="stylesheet">
+    <script src="./backgroundManager.js"></script>
+
+    <!-- Primary Meta Tags -->
+    <meta name="title" content="Browser storage - Jack's project hub" />
+    <meta name="description" content="(Inventing The Wheel (ITF) is a semi-series where I create already existing things from scratch.)..." />
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://jacks-project-hub.vercel.app/posts/Browser storage/" />
+    <meta property="og:title" content="Browser storage - Jack's project hub" />
+    <meta property="og:description" content="(Inventing The Wheel (ITF) is a semi-series where I create already existing things from scratch.)..." />
+    <meta property="og:image" content="https://jacks-project-hub.vercel.app/posts/Browser storage/preview.png" />
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image" />
+    <meta property="twitter:url" content="https://jacks-project-hub.vercel.app/posts/Browser storage/" />
+    <meta property="twitter:title" content="Browser storage - Jack's project hub" />
+    <meta property="twitter:description" content="(Inventing The Wheel (ITF) is a semi-series where I create already existing things from scratch.)..." />
+    <meta property="twitter:image" content="https://jacks-project-hub.vercel.app/posts/Browser storage/preview.png" />
+</head>
+
+<body>
+    <canvas id="backgroundCanvas"></canvas>
+    <div id="overlay">
+        <div class="scrollOffset"></div>
+        <div id="content">
+            <div id="info">
+                
+        <div class="markup" style="color:#fff; font-style:normal; font-weight:normal; font-size:xx-large; text-decoration: none; text-decoration: none;margin:0; padding:0; word-wrap:break-word; width:100%; height:100%;">
+            <div style="text-align:center;"><span style="color:#0f0; font-style:italic; font-weight:bold;">ITW: </span>Overly secure<br>serverside storage</div>
+        </div>
+        
+                <!-- will autofill on website load -->
+                <script>
+                    const postName = 'Browser storage'
+                    const script = document.currentScript
+                    const addStat = text => {
+                        const div = document.createElement('div')
+                        div.innerHTML = text
+                        script.insertAdjacentElement('afterend', div)
+                    }
+                    document.addEventListener('DOMContentLoaded', () => {
+                        fetch('../../mem.json')
+                            .then(response => response.json())
+                            .then(mem => {
+                                addStat(`First published: <code>${Math.floor((Date.now() - mem.postsCreated[postName]) / 86400000)}</code> days ago`)
+                                addStat(`Last updated: <code>${Math.floor((Date.now() - mem.postsUpdated[postName]) / 86400000)}</code> days ago`)
+                                addStat(`Current hash: <code>${mem.postHashes[postName]}</code>`)
+                            })
+                            .catch(error => {
+                                console.error('Error fetching mem for stats:', error)
+                            })
+                    })
+                </script>
+                <!-- </div> -->
+                <div id="return_link">
+                    <a href="../../">Home</a>
+                </div>
+            </div>
+            <div id="post_background">
+                <div id="post">
+                    
+        <div class="markup" style="color:#fff; font-style:normal; font-weight:normal; font-size:large; text-decoration: none; text-decoration: none;margin:0; padding:0; word-wrap:break-word; width:100%; height:100%;">
+<script>; 
+ (() => {
+ const wrapper = document.currentScript.parentNode;
+ function setValue(key, value) {
+ let saveData = sessionStorage.getItem("markup") != null ? JSON.parse(sessionStorage.getItem("markup")) : {};
+ saveData[key] = value;
+ sessionStorage.setItem("markup", JSON.stringify(saveData));
+ }
+ function getValue(key) {
+ return (sessionStorage.getItem("markup") != null ? JSON.parse(sessionStorage.getItem("markup")) : {})[key];
+ }
+ function removeKey(key) {
+ let saveData = sessionStorage.getItem("markup") != null ? JSON.parse(sessionStorage.getItem("markup")) : {};
+ delete saveData[key];
+ sessionStorage.setItem("markup", JSON.stringify(saveData));
+ }
+ document.addEventListener("DOMContentLoaded", () => {
+ [...wrapper.getElementsByClassName("folder")].forEach((folder) => {
+ if (getValue(`id_${folder.dataset.id}`) != null) {
+ const children = folder.children, open = getValue(`id_${folder.dataset.id}`);
+ children[0].innerHTML = children[0].innerHTML.replace(open ? "open" : "close", open ? "close" : "open");
+ children[1].style.display = open ? "" : "none";
+ }
+ });
+ });
+ if (window.markup == null)
+ window.markup = {
+ folder(event) {
+ event.stopPropagation();
+ const folder = event.target.closest(".folder"), children = folder.children, open = children[1].style.display == "none";
+ children[0].innerHTML = children[0].innerHTML.replace(open ? "open" : "close", open ? "close" : "open");
+ children[1].style.display = open ? "" : "none";
+ setValue(`id_${folder.dataset.id}`, open);
+ }
+ };
+ })();
+; </script>
+            <div style="text-align:center;"><span style="color:#0f0; font-size:xx-large;">I need a file server.</span><span style="color:#0f0; font-size:x-large;"><br>One that I can access from any browser with just a username / password.</span></div><div style="text-align:left;"><br><br>There are services that offer this already, but they all have some problems:<span style="color:#0f0;"><br>&nbsp;*</span> They cost money.<span style="color:#0f0;"><br>&nbsp;*</span> Have a storage limit.<span style="color:#0f0;"><br>&nbsp;*</span> Rate limiting.<span style="color:#0f0;"><br>&nbsp;*</span> Their apis (if they have any) are slow.<span style="color:#0f0;"><br>&nbsp;*</span> Don't work offline.<span style="color:#0f0;"><br>&nbsp;*</span> Aren't open source.<span style="color:#0f0;"><br>&nbsp;*</span> Have sketchy security.<br><br>So I'll just have to make my own <span style="font-size:small;">(yay)</span>, so what features do I want?<span style="color:#0f0;"><br>&nbsp;*</span> Open source (obviously).<span style="color:#0f0;"><br>&nbsp;*</span> Runs locally (which also means it can work offline).<span style="color:#0f0;"><br>&nbsp;*</span> Fast apis.<span style="color:#0f0;"><br>&nbsp;*</span> Trustless security.<span style="font-style:italic; font-size:x-large;"><br><br>What do I mean by trustless security?</span><div style="display:block; height:1.5em; line-height:1.5em;"></div> I mean a system were the server can be a bad actor and not get your data, where man in the middle attacks do nothing, where the files never leave the client unencrypted.</div><div style="text-align:center;"><span style="font-size:x-large;"><br> Part 1: </span><span style="color:#0f0; font-size:x-large;"> Serving the server</span></div>
+                            <div class="folder" data-id=0>
+                                <div style="cursor: pointer; text-align:center;" onclick="window.markup.folder(event)">
+                                    |[click to close]
+                                </div>
+                                <div >
+                                    <div style="text-align:center;"></div><div style="text-align:left;"><br>To create the server I used nodejs (or <span style="color:#0f0;"><a href="https://bun.com/" style="all:unset; cursor:pointer;">bun</span></a> to be specific), bun hsa a really nice easy to use <span style="color:#0f0;"><a href="https://bun.com/docs/api/http" style="all:unset; cursor:pointer;">server api</span></a>, so it'll handle all the server stuff easily.</div>
+                                </div>
+                            </div>
+                            <div style="text-align:center;"><span style="font-size:x-large;"><br>Part 2: </span><span style="color:#0f0; font-size:x-large;"> Messaging the server</span></div>
+                            <div class="folder" data-id=1>
+                                <div style="cursor: pointer; text-align:center;" onclick="window.markup.folder(event)">
+                                    |[click to close]
+                                </div>
+                                <div >
+                                    <div style="text-align:center;"></div><div style="text-align:left;"><br>Now this <span style="font-style:italic;">could</span> be easy, using https I would know that my messages aren't being messed with, but if I want to host this server myself I'd rather not have to set up the needed certificates.<div style="display:block; height:2em; line-height:2em;"></div>I've actually already done this before with some really cool math magic that is the <span style="color:#0f0;"><a href="https://en.wikipedia.org/wiki/Diffie%E2%80%93Hellman_key_exchange" style="all:unset; cursor:pointer;">Diffie-Hellman key exchange</span></a>, it has to peers exchange public keys and use them to generate a shared key used for symmetric message encryption (illustration below).</div><div style="text-align:center;"><br><script src="diffy.js"></script> </div>
+                                </div>
+                            </div>
+                            <div style="text-align:center;"><span style="font-size:x-large;"><br>Part 3: </span><span style="color:#0f0; font-size:x-large;"> Proving identity to the server</span></div>
+                            <div class="folder" data-id=2>
+                                <div style="cursor: pointer; text-align:center;" onclick="window.markup.folder(event)">
+                                    |[click to close]
+                                </div>
+                                <div >
+                                    <div style="text-align:center;"></div><div style="text-align:left;"><br>I can hardly just have any client able to claim to be any user, that would allow anyone full access to your files (which would do them no good, since they're still encrypted remember?), but more importantly it would allow them to delete your files / fill up your storage with junk files, so the server needs some way to know the client is who they say they are.<div style="display:block; height:2em; line-height:2em;"></div>One common way is to send the server your login info, but that isn't an option when you don't trust the server, the secret you send it has to only matter to it and be unusable to everyone else, one idea would be for the server to send a one-time code to new users that they remember and use as part of their login, but that would require them to write it down somewhere for each server they use.<div style="display:block; height:2em; line-height:2em;"></div>But with a little modifications that actually does work well, the server sends a "seed" to the client, who then hashes it + their login info to create a token that they send back to the server, if this is the first time the server has connected to this user it stores the token as their auth token, and if it's not the first time it compares the sent token to the stored token (illustrations below).</div><div style="text-align:center;"><br><script src="prove_first.js"></script><div style="display:block; height:2em; line-height:2em;"></div><script src="prove_again.js"></script> </div>
+                                </div>
+                            </div>
+                            <div style="text-align:center;"><span style="font-size:x-large;"><br>Part 4: </span><span style="color:#0f0; font-size:x-large;"> Defining the api</span></div>
+                            <div class="folder" data-id=3>
+                                <div style="cursor: pointer; text-align:center;" onclick="window.markup.folder(event)">
+                                    |[click to close]
+                                </div>
+                                <div >
+                                    <div style="text-align:center;"></div><div style="text-align:left;"><br>Now that I have a server, and can safely message it without listening ears, and it knows who I am and won't let random people mess with my stuff, what do I need it to do? Since I don't want the server to know what my files are, and as little information about them as possible, I want a bare bones api that can only do low level stuff, reading, writing, and deleting files in a flat folder for the user.</div>
+                                </div>
+                            </div>
+                            <div style="text-align:center;"><span style="font-size:x-large;"><br>Part 5: </span><span style="color:#0f0; font-size:x-large;"> Using the api</span></div>
+                            <div class="folder" data-id=4>
+                                <div style="cursor: pointer; text-align:center;" onclick="window.markup.folder(event)">
+                                    |[click to close]
+                                </div>
+                                <div >
+                                    <div style="text-align:center;"></div><div style="text-align:left;"><br>I can now use the server to securely save files, but I don't want the server to be able to read them, so I need to encrypt them, the problem is a user's username + password + seed alone isn't enough data to create a secure key.<span style="font-size:small;"><div style="display:block; height:2em; line-height:2em;"></div>My first thought was to somehow have the server store the key in a way that it can't use it, but I wasn't able to find a way that that could work.</span><div style="display:block; height:2em; line-height:2em;"></div>Unless... turns out I can <span style="color:#0f0;"><a href="https://developer.mozilla.org/en-US/docs/Web/API/SubtleCrypto/deriveKey#pbkdf2_derive_aes_key_from_password" style="all:unset; cursor:pointer;">derive an AES key from a small string</span></a>, and then use that base key + some extra random data per use to create a proper key, each file will have the used "salt" and "iv" stored with it in plaintext, but for once that's actually fine, and then they can be used to recreate the same key later to decrypt the file (illustrations below).</div><div style="text-align:center;"><br><script src="encrypting.js"></script><div style="display:block; height:2em; line-height:2em;"></div><script src="decrypting.js"></script> </div>
+                                </div>
+                            </div>
+                            <div style="text-align:center;"><span style="font-size:x-large;"><br>Part 6: </span><span style="color:#0f0; font-style:italic;">[BONUS]</span><span style="color:#0f0; font-size:x-large;"> Adding a virtual filesystem</span></div>
+                            <div class="folder" data-id=5>
+                                <div style="cursor: pointer; text-align:center;" onclick="window.markup.folder(event)">
+                                    |[click to close]
+                                </div>
+                                <div >
+                                    <div style="text-align:center;"></div><div style="text-align:left;"><span style="font-style:italic;"><br>Now that everything's done it's time to use it, how about a basic file storage system, ok the user uploaded some images nice, and some text files... </span><span style="font-style:italic; font-size:small;">oh now they want all of their images back, but I never recorded what was what, I don't even have a list of the files they have saved...</span><div style="display:block; height:2em; line-height:2em;"></div>A slightly more extensive filesystem would do wonders, but making api calls to the server for every filesystem command is way too inefficient, so it needs to be a virtual filesystem.<div style="display:block; height:2em; line-height:2em;"></div>I can do this by having a main "index" file that stores the state of the filesystem, I just have to keep it updated, but doing this allows for a lot more features:<span style="color:#0f0;"><br>&nbsp;*</span> Folders.<span style="color:#0f0;"><br>&nbsp;*</span> Reading a folder's contents.<span style="color:#0f0;"><br>&nbsp;*</span> Automatic deduplication of files.<span style="color:#0f0; font-size:small;"><br>&nbsp;* *</span><span style="font-size:small;"> It stores the hash of each saved file in the index.</span><span style="color:#0f0; font-size:small;"><br>&nbsp;* *</span><span style="font-size:small;"> When I delete a file it only deletes the real file if no other file in the index has the same hash.</span><span style="color:#0f0; font-size:small;"><br>&nbsp;* *</span><span style="font-size:small;"> Whenever I save a file it first sees if it already have an identical file saved, if so it can skip saving the actual file.</span><span style="color:#0f0;"><br>&nbsp;*</span> Auto creating folders as needed.<span style="color:#0f0;"><br>&nbsp;*</span> Auto deleting empty folders.<span style="color:#0f0;"><br>&nbsp;*</span> I can see errors / warning for overwriting a file, trying to read a file that doesn't exist etc before actually messaging the server.<span style="color:#0f0;"><br>&nbsp;*</span> Faster queries (since it doesn't have to query the server for each operation).</div>
+                                </div>
+                            </div>
+                            <div style="text-align:center;"><span style="font-style:italic; font-size:x-large;"><div style="display:block; height:2em; line-height:2em;"></div> That's all for this project for now, if you want to see any of the code you can see it on my </span><span style="color:#0f0; font-style:italic; font-size:x-large;"><a href="https://github.com/Jacks-underscore-username/Untrustworthy-Serverside-Storage" style="all:unset; cursor:pointer;">github</span></a><span style="font-style:italic; font-size:x-large;">.</span></div>
+        </div>
+        
+                </div>
+            </div>
+            <div id="returnToTopButton">
+                <span onclick="window.scroll({top:0,left:0,behavior:'smooth'})">Return to top</span>
+            </div>
+        </div>
+        <div class="scrollOffset"></div>
+    </div>
+</body>
+
+</html>
